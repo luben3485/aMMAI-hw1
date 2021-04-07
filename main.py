@@ -11,6 +11,7 @@ from models.resnet34 import Resnet34Center
 from ArcMarginModel import ArcMarginModel
 from tqdm import tqdm
 from PIL import Image
+from facenet_pytorch import MTCNN
 
 writer = SummaryWriter()
 
@@ -135,7 +136,7 @@ def forward_closed():
         trns.Resize((256, 256)),
         #trns.RandomCrop((224, 224)),
         #trns.RandomHorizontalFlip(),
-        trns.ToTensor(),
+        #trns.ToTensor(),
         trns.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225]),
     ])
 
@@ -147,14 +148,24 @@ def forward_closed():
     model.load_state_dict(torch.load(os.path.join(root, ckpnt)))
     model.cuda()
 
+    mtcnn = MTCNN(image_size=256, margin=0)    
+
     closed_set_pred = []
     for i in tqdm(range(len(closed_set_label))):
         img_path_1 = os.path.join(root, test_root, 'closed_set', 'test_pairs', 'test_pair_' + str(i) + '_1.jpg')
         img_path_2 = os.path.join(root, test_root, 'closed_set', 'test_pairs', 'test_pair_' + str(i) + '_2.jpg')
         img_1 = Image.open(img_path_1).convert('RGB')
         img_2 = Image.open(img_path_2).convert('RGB')
-        img_1 = test_transform(img_1).unsqueeze(0).cuda()
-        img_2 = test_transform(img_2).unsqueeze(0).cuda()
+        
+        #img_1 = test_transform(img_1)
+        #img_2 = test_transform(img_2)
+
+        # face detection
+        img_1 = mtcnn(img_1)    
+        img_2 = mtcnn(img_2)    
+        
+        img_1 = img_1.unsqueeze(0).cuda()
+        img_2 = img_2.unsqueeze(0).cuda()
 
         model.eval()
 
