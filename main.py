@@ -25,7 +25,7 @@ parser.add_argument('--num_class', type=int, default=685)
 parser.add_argument('--learning_rate', type=float, default=0.5)
 
 parser.add_argument('--test_root', type=str, default='data/test')
-parser.add_argument('--ckpnt', type=str, default='ckpnt_0329/checkpoint-400.pth')
+parser.add_argument('--ckpnt', type=str, default='trained_model/checkpoint.pth')
 
 parser.add_argument('--mode', type=str, default='train')
 
@@ -166,7 +166,7 @@ def forward_closed():
         np_feat_2 = feature_2.detach().cpu().numpy()
         dis = np.sum(np.square(np_feat_1 - np_feat_2)) / embedding_dim
 
-        threshold = 1.1
+        threshold = 1.4
         if dis < threshold:
             closed_set_pred.append(1)
         else:
