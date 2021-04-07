@@ -11,7 +11,7 @@ from torch.utils.data.dataset import Dataset
 import json
 import os
 
-use_folder = 'C'
+use_folder = 'A'
 class APDDataset(Dataset):
     def __init__(self, root, transform):
         

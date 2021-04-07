@@ -10,11 +10,13 @@ from torch.utils.tensorboard import SummaryWriter
 from models.resnet34 import Resnet34Center
 from ArcMarginModel import ArcMarginModel
 
+os.environ["CUDA_VISIBLE_DEVICES"] = '2'
+
 writer = SummaryWriter()
 
 parser = argparse.ArgumentParser()
 parser.add_argument('--train_root', type=str, default='./data/train')
-parser.add_argument('--checkpoint_dir', type=str, default='./ckpnt')
+parser.add_argument('--checkpoint_dir', type=str, default='./ckpnt_softmax_0407')
 parser.add_argument('--epochs', type=int, default=400)
 parser.add_argument('--batch_size', type=int, default=256)
 parser.add_argument('--embedding_dim', type=int, default=128)
@@ -88,7 +90,7 @@ def main():
             loss.backward()
             optimizer.step()
 
-            acc = (output.argmax(dim=-1) == labels).float().mean()
+            acc = (logits.argmax(dim=-1) == labels).float().mean()
 
             train_loss.append(loss.item())
             train_accs.append(acc)

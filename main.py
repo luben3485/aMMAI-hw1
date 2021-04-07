@@ -25,7 +25,7 @@ parser.add_argument('--num_class', type=int, default=685)
 parser.add_argument('--learning_rate', type=float, default=0.5)
 
 parser.add_argument('--test_root', type=str, default='data/test')
-parser.add_argument('--ckpnt', type=str, default='ckpnt_0329/checkpoint-400.pth')
+parser.add_argument('--ckpnt', type=str, default='ckpnt/checkpoint-200.pth')
 
 parser.add_argument('--mode', type=str, default='train')
 

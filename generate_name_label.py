@@ -2,7 +2,7 @@ import os
 import glob
 import json
 
-use_folder = 'C'
+use_folder = 'A'
 dataset_root = os.getcwd()
 dataset_dir = os.path.join(dataset_root, 'data')
 train_dir = os.path.join(dataset_dir, 'train')

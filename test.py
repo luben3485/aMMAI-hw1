@@ -9,7 +9,7 @@ from tqdm import tqdm
 
 parser = argparse.ArgumentParser()
 parser.add_argument('--test_root', type=str, default='data/test')
-parser.add_argument('--ckpnt', type=str, default='ckpnt_0329/checkpoint-400.pth')
+parser.add_argument('--ckpnt', type=str, default='ckpnt_center/checkpoint-400.pth')
 parser.add_argument('--embedding_dim', type=int, default=128)
 parser.add_argument('--num_class', type=int, default=685)
 
